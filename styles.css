@@ -1,0 +1,304 @@
+:root {
+    /* Tema oscuro */
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --link-color: #1e1e1e;
+    --link-text-color: #ffffff;
+    --link-hover: #2d2d2d;
+    --link-hover-text: #ffffff;
+    --profile-border: #1e3a8a;
+    --profile-bg: #1e3a8a;
+    --creator-color: #f1c40f;
+    --container-bg: rgba(30, 30, 30, 0.85);
+    --bio-color: rgba(255, 255, 255, 0.8);
+    --toggle-bg: #444;
+    --toggle-icon: #f1c40f;
+    --video-title-color: #f1c40f;
+}
+
+[data-theme="light"] {
+    /* Tema claro */
+    --bg-color: #1e3a8a;
+    --text-color: #ffffff;
+    --link-color: #0d47a1;
+    --link-text-color: #ffffff;
+    --link-hover: #1565c0;
+    --link-hover-text: #ffffff;
+    --profile-border: #0d47a1;
+    --profile-bg: #0d47a1;
+    --creator-color: #ffd700;
+    --container-bg: rgba(30, 58, 138, 0.85);
+    --bio-color: rgba(255, 255, 255, 0.8);
+    --toggle-bg: #bdc3c7;
+    --toggle-icon: #3498db;
+    --video-title-color: #ffd700;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+#rain-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container {
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: var(--container-bg);
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    text-align: center;
+    margin: 20px 0;
+    transition: all 0.5s ease;
+}
+
+.profile-container {
+    margin-bottom: 25px;
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    border: 3px solid var(--profile-border);
+    background-color: var(--profile-bg);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.profile-pic::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        transparent 45%,
+        white 50%,
+        transparent 55%
+    );
+    animation: rainEffect 2s linear infinite;
+    opacity: 0.6;
+}
+
+.profile-name {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    color: var(--text-color);
+    transition: color 0.5s ease;
+}
+
+.profile-bio {
+    font-size: 1rem;
+    color: var(--bio-color);
+    transition: color 0.5s ease;
+}
+
+.links-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    background-color: var(--link-color);
+    color: var(--link-text-color);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    gap: 10px;
+}
+
+.link:hover {
+    background-color: var(--link-hover);
+    color: var(--link-hover-text);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.link-icon {
+    font-size: 1rem;
+}
+
+.video-section {
+    margin: 30px 0 20px;
+    text-align: center;
+}
+
+.video-title {
+    font-size: 1.4rem;
+    color: var(--video-title-color);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.video-container {
+    margin-top: 10px;
+}
+
+.profile-video {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    background-color: #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.footer {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.7;
+    transition: color 0.5s ease;
+}
+
+.creator {
+    color: var(--creator-color);
+    font-weight: 600;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--toggle-bg);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-icon {
+    color: var(--toggle-icon);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .theme-icon {
+    transform: rotate(360deg);
+}
+
+[data-theme="light"] .fa-moon::before {
+    content: "\f185";
+}
+
+[data-theme="dark"] .fa-moon::before {
+    content: "\f186";
+}
+
+.theme-toggle:hover {
+    opacity: 0.9;
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+@keyframes rainEffect {
+    0% {
+        transform: translateY(-100%) translateX(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateY(100%) translateX(100%) rotate(45deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+    }
+    
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .profile-name {
+        font-size: 1.5rem;
+    }
+    
+    .theme-toggle {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .theme-icon {
+        font-size: 1rem;
+    }
+    
+    .video-title {
+        font-size: 1.2rem;
+    }
+    
+    .profile-video {
+        max-width: 100%;
+    }
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* Relación de aspecto 16:9 (para videos horizontales) */
+    height: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.youtube-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Ajuste para videos verticales (ej: 9:16) */
+@media (max-aspect-ratio: 1/1) {
+    .video-wrapper {
+        padding-bottom: 177.78%; /* 16:9 invertido (9/16 = 0.5625) */
+    }
+}
