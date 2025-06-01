@@ -3,50 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Perfil</title>
+    <title>@salvagepe</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+      <link rel="icon" type="image/png" href="icon.png" />
+    <!-- Desactiva la caché -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 </head>
-<body>
+<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div class="container">
         <div class="profile-container">
-            <div class="profile-pic" style="background-image: url('tufoto.jpg');"></div>
-            <h1 class="profile-name">@tuusuario</h1>
-            <p class="profile-bio">Bienvenido a mi perfil</p>
+            <div class="profile-pic image-protection" style="background-image: url('tufoto.jpg');"></div>
+            <h1 class="profile-name">@salvagepe</h1>
+            <p class="profile-bio">Aquí encontraras todos los Mods que he creado</p>
         </div>
 
-        <div class="links-container">
-            <a href="#" class="link" target="_blank">
-                <i class="fas fa-link link-icon"></i> Primer Enlace
-            </a>
-            <a href="#" class="link" target="_blank">
-                <i class="fas fa-user link-icon"></i> Segundo Enlace
-            </a>
-            <a href="#" class="link" target="_blank">
-                <i class="fas fa-envelope link-icon"></i> Tercer Enlace
-            </a>
-        </div>
-
-        <div class="video-section">
-    <h2 class="video-title">Mod Latino Adelanto</h2>
-    <div class="video-container">
-        <div class="video-wrapper">
-            <iframe 
-                src="https://youtu.be/cgg5V5awnj0?si=yvnT9hv5yicX-J3K" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen
-                class="youtube-video">
-            </iframe>
-        </div>
-    </div>
+<div class="links-container">
+    <a href="https://next.nexusmods.com/profile/salvagepe/mods" class="link" target="_blank" onmousedown="return false">
+        <img src="nexuslogo.png" class="link-icon" alt="Icono 1">
+        Mods
+    </a>
+    <a href="https://www.tiktok.com/@salvagepe" class="link" target="_blank" onmousedown="return false">
+        <img src="tiktok.png" class="link-icon" alt="Icono 2">
+        TikTok
+    </a>
+    <a href="https://www.youtube.com/@salvagep" class="link" target="_blank" onmousedown="return false">
+        <img src="youtubelogo.png" class="link-icon" alt="Icono 3">
+        YouTube
+    </a>
 </div>
 
-        <div class="footer">
-            <p>Página creada por <span class="creator">Tu Nombre</span></p>
+        <div class="video-section">
+            <h2 class="video-title">Mods Latinos Adelanto</h2>
+            <div class="video-container">
+                <div class="youtube-embed">
+                    <iframe 
+                        id="youtube-video"
+                        src="https://www.youtube.com/embed/tq1jzwCwZsE?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&enablejsapi=1&showinfo=0&loop=1&playlist=tq1jzwCwZsE"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                        class="youtube-video"
+                    ></iframe>
+                </div>
+<div class="video-controls">
+    <div class="main-controls">
+        <button id="play-pause-btn" class="video-button" onmousedown="return false">
+            <i class="fas fa-pause"></i> Pausar
+        </button>
+        <button id="unmute-btn" class="video-button" onmousedown="return false">
+            <i class="fas fa-volume-mute"></i> Quitar silencio
+        </button>
+    </div>
+    <button id="replay-btn" class="video-button replay-button" onmousedown="return false">
+        <i class="fas fa-redo"></i> Desde el Inicio
+    </button>
+</div>
+            </div>
         </div>
 
-        <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+<div class="footer">
+    <p>Página creada por <a href="https://www.youtube.com/@NanakuraDB" class="creator-link" target="_blank">@Nanakura</a></p>
+</div>
+
+        <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema" onmousedown="return false">
             <i class="fas fa-moon theme-icon"></i>
         </button>
     </div>

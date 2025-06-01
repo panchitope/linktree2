@@ -1,17 +1,73 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Configuración del canvas para la lluvia
+    // === PROTECCIÓN CONTRA COPIA Y DESCARGA ===
+    // Bloquea el menú contextual (clic derecho)
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+    });
+
+    // Bloquea la selección de texto
+    document.addEventListener('selectstart', function(e) {
+        e.preventDefault();
+        return false;
+    });
+
+    // Bloquea arrastrar imágenes y enlaces
+    document.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+        return false;
+    });
+
+    // Bloquea atajos de teclado (Ctrl+C, Ctrl+U, F12, etc.)
+    document.addEventListener('keydown', function(e) {
+        // Bloquear Ctrl+Shift+I, Ctrl+U, Ctrl+S, Ctrl+C, etc.
+        if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            return false;
+        }
+        // Bloquear F12 (DevTools)
+        if (e.key === 'F12' || e.keyCode === 123) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // Desactiva la navegación por teclado (Tab)
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+        }
+    });
+
+    // === PROTECCIÓN DE IMÁGENES ===
+    // Evita que las imágenes se descarguen
+    document.querySelectorAll('img').forEach(img => {
+        img.setAttribute('draggable', 'false');
+    });
+
+    // === PROTECCIÓN DEL VIDEO ===
+    // Ocultar controles nativos de YouTube
+    function hideYouTubeUI() {
+        const iframe = document.getElementById('youtube-video');
+        iframe.style.pointerEvents = 'none';
+    }
+
+    // Llama a esta función después de cargar el iframe
+    document.getElementById('youtube-video').addEventListener('load', function() {
+        hideYouTubeUI();
+        // Forzar ocultamiento cada segundo por si YouTube lo vuelve a mostrar
+        setInterval(hideYouTubeUI, 1000);
+    });
+
+    // === ANIMACIÓN DE LLUVIA (igual que antes) ===
     const canvas = document.getElementById('rain-canvas');
     const ctx = canvas.getContext('2d');
-    
-    // Ajustar tamaño del canvas
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     
-    // Variables para la lluvia
     let drops = [];
     const dropCount = 150;
     
-    // Crear gotas de lluvia
     for (let i = 0; i < dropCount; i++) {
         drops.push({
             x: Math.random() * canvas.width,
@@ -22,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Función para dibujar la lluvia
     function drawRain() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
@@ -46,26 +101,19 @@ document.addEventListener('DOMContentLoaded', function() {
         requestAnimationFrame(drawRain);
     }
     
-    // Iniciar animación de lluvia
     drawRain();
-    
-    // Cambiar tema
+
+    // === TOGGLE DE TEMA (igual que antes) ===
     const themeToggle = document.getElementById('theme-toggle');
     
-    // Función para detectar preferencia de color del sistema
     function detectSystemTheme() {
         return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     }
     
-    // Función para aplicar tema
     function applyTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
-        
-        // Actualizar aria-label
         themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
-        
-        // Actualizar icono
         const themeIcon = document.querySelector('.theme-icon');
         if (theme === 'light') {
             themeIcon.classList.remove('fa-moon');
@@ -76,50 +124,84 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Función para alternar tema
     function toggleTheme() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         applyTheme(newTheme);
     }
     
-    // Inicializar tema
     function initTheme() {
         const savedTheme = localStorage.getItem('theme');
         const systemTheme = detectSystemTheme();
-        
-        // Usar tema guardado o tema del sistema
         const initialTheme = savedTheme || systemTheme;
         applyTheme(initialTheme);
     }
     
-    // Escuchar cambios en la preferencia del sistema
     window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
         if (!localStorage.getItem('theme')) {
             applyTheme(e.matches ? 'light' : 'dark');
         }
     });
     
-    // Configurar evento del botón
     themeToggle.addEventListener('click', toggleTheme);
-    
-    // Inicializar
     initTheme();
     
-    // Redimensionar canvas
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     });
     
-    // Efecto de hover para la foto de perfil
     const profilePic = document.querySelector('.profile-pic');
-    
     profilePic.addEventListener('mouseenter', () => {
         profilePic.style.transform = 'scale(1.05)';
     });
-    
     profilePic.addEventListener('mouseleave', () => {
         profilePic.style.transform = 'scale(1)';
+    });
+
+    // === CONTROLADORES DE VIDEO (igual que antes) ===
+    const youtubeVideo = document.getElementById('youtube-video');
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const unmuteBtn = document.getElementById('unmute-btn');
+    const replayBtn = document.getElementById('replay-btn');
+
+    let isPlaying = true;
+    let isMuted = true;
+
+    function postToYouTube(command, args) {
+        youtubeVideo.contentWindow.postMessage(JSON.stringify({
+            event: 'command',
+            func: command,
+            args: args || []
+        }), '*');
+    }
+
+    playPauseBtn.addEventListener('click', () => {
+        if (isPlaying) {
+            postToYouTube('pauseVideo');
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i> Reproducir';
+        } else {
+            postToYouTube('playVideo');
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pausar';
+        }
+        isPlaying = !isPlaying;
+    });
+
+    unmuteBtn.addEventListener('click', () => {
+        if (isMuted) {
+            postToYouTube('unMute');
+            unmuteBtn.innerHTML = '<i class="fas fa-volume-up"></i> Silenciar';
+        } else {
+            postToYouTube('mute');
+            unmuteBtn.innerHTML = '<i class="fas fa-volume-mute"></i> Quitar silencio';
+        }
+        isMuted = !isMuted;
+    });
+
+    replayBtn.addEventListener('click', () => {
+        postToYouTube('seekTo', [0, true]);
+        postToYouTube('playVideo');
+        isPlaying = true;
+        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pausar';
     });
 });

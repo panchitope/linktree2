@@ -6,12 +6,12 @@
     --link-text-color: #ffffff;
     --link-hover: #2d2d2d;
     --link-hover-text: #ffffff;
-    --profile-border: #1e3a8a;
+    --profile-border:  #444444;
     --profile-bg: #1e3a8a;
     --creator-color: #f1c40f;
     --container-bg: rgba(30, 30, 30, 0.85);
     --bio-color: rgba(255, 255, 255, 0.8);
-    --toggle-bg: #444;
+    --toggle-bg: #444444;
     --toggle-icon: #f1c40f;
     --video-title-color: #f1c40f;
 }
@@ -51,7 +51,33 @@ body {
     transition: background-color 0.5s ease, color 0.5s ease;
     overflow: hidden;
     position: relative;
+        user-select: none; /* Evita selección de texto */
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Edge */
+        -webkit-touch-callout: none !important;
+    -webkit-user-drag: none !important;
 }
+
+img {
+    pointer-events: none;
+    -webkit-user-drag: none;
+}
+
+.image-protection {
+    position: relative;
+}
+.image-protection::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 9999;
+}
+
 
 #rain-canvas {
     position: absolute;
@@ -153,8 +179,18 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+.link:hover .link-icon {
+    transform: scale(1.1); /* Ejemplo: agrandar ligeramente al pasar el mouse */
+}
+
 .link-icon {
-    font-size: 1rem;
+    width: 20px;       /* Ajusta el tamaño según necesites */
+    height: 20px;
+    object-fit: contain; /* Mantiene la proporción de la imagen */
+    margin-right: 10px;  /* Espacio entre el icono y el texto */
+    transition: all 0.3s ease; /* Para efectos hover si los quieres */
+        pointer-events: none;
+    -webkit-user-drag: none;
 }
 
 .video-section {
@@ -170,7 +206,10 @@ body {
 }
 
 .video-container {
-    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .profile-video {
@@ -278,13 +317,14 @@ body {
     }
 }
 
-.video-wrapper {
+.youtube-embed {
     position: relative;
-    padding-bottom: 56.25%; /* Relación de aspecto 16:9 (para videos horizontales) */
-    height: 0;
-    overflow: hidden;
+    width: 100%;
+    padding-bottom: 56.25%;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    margin: 0 auto;
+    pointer-events: none;
 }
 
 .youtube-video {
@@ -296,9 +336,119 @@ body {
     border: none;
 }
 
-/* Ajuste para videos verticales (ej: 9:16) */
-@media (max-aspect-ratio: 1/1) {
-    .video-wrapper {
-        padding-bottom: 177.78%; /* 16:9 invertido (9/16 = 0.5625) */
+.replay-button {
+    padding: 10px 20px;
+    background-color: var(--link-color);
+    color: var(--link-text-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: auto;
+    min-width: 200px;
+}
+
+.replay-button:hover {
+    background-color: var(--link-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.video-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    width: 100%;
+    align-items: center;
+}
+
+.main-controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+.video-button {
+    padding: 10px;
+    background-color: var(--link-color);
+    color: var(--link-text-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    font-size: 0.8rem;
+}
+
+.video-button:hover {
+    background-color: var(--link-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.video-button i {
+    font-size: 0.9rem;
+}
+
+@media (max-width: 480px) {
+    .main-controls {
+        grid-template-columns: 1fr;
     }
+    
+    .replay-button {
+        width: 100%;
+    }
+}
+
+/* Ocultar cualquier overlay de YouTube */
+.html5-video-player .ytp-chrome-top, 
+.html5-video-player .ytp-chrome-bottom, 
+.html5-video-player .ytp-gradient-top,
+.html5-video-player .ytp-gradient-bottom {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+/* Oculta elementos de la UI de YouTube */
+.youtube-video {
+    pointer-events: none !important;
+}
+
+/* Fuerza ocultar cualquier overlay emergente */
+.ytp-ce-element, 
+.ytp-pause-overlay, 
+.ytp-endscreen-content, 
+.ytp-videowall-still, 
+.ytp-title-channel, 
+.ytp-chrome-top, 
+.ytp-show-cards-title {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.creator-link {
+    color: var(--creator-color);
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Transición para efectos hover */
+    display: inline-block; /* Necesario para que transform funcione correctamente */
+}
+
+.creator-link:hover {
+    transform: scale(1.05); /* Agrandamiento del 5% */
+    opacity: 0.9; /* Opcional: ligera transparencia al pasar el mouse */
 }
