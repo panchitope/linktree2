@@ -4,76 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@salvagepe</title>
+    <link rel="icon" type="image/png" href="icon.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-      <link rel="icon" type="image/png" href="icon.png" />
-    <!-- Desactiva la caché -->
-    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
 </head>
-<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+<body>
+    <div class="rain" id="rain"></div>
+    
     <div class="container">
-        <div class="profile-container">
-            <div class="profile-pic image-protection" style="background-image: url('tufoto.jpg');"></div>
-            <h1 class="profile-name">@salvagepe</h1>
-            <p class="profile-bio">Aquí encontraras todos los Mods que he creado</p>
+        <img src="tufoto.jpg" alt="Mi foto de perfil" class="profile-pic" id="profilePic" draggable="false">
+        <h1>Aquí podrás encontrar mis Mods</h1>
+        
+        <div class="links">
+            <a href="https://tupagina.com" class="link link-1" target="_blank" rel="noopener noreferrer" draggable="false">
+                <img src="nexuslogo.png" alt="" class="link-icon"> Mi Página Web
+            </a>
+            <a href="https://tiktok.com/tu_usuario" class="link link-2" target="_blank" rel="noopener noreferrer" draggable="false">
+                <img src="tiktok.png" alt="" class="link-icon"> TikTok
+            </a>
+            <a href="https://youtube.com/tu_canal" class="link link-3" target="_blank" rel="noopener noreferrer" draggable="false">
+                <img src="youtubelogo.png" alt="" class="link-icon"> YouTube
+            </a>
         </div>
-
-<div class="links-container">
-    <a href="https://next.nexusmods.com/profile/salvagepe/mods" class="link" target="_blank" onmousedown="return false">
-        <img src="nexuslogo.png" class="link-icon" alt="Icono 1">
-        Mods
-    </a>
-    <a href="https://www.tiktok.com/@salvagepe" class="link" target="_blank" onmousedown="return false">
-        <img src="tiktok.png" class="link-icon" alt="Icono 2">
-        TikTok
-    </a>
-    <a href="https://www.youtube.com/@salvagep" class="link" target="_blank" onmousedown="return false">
-        <img src="youtubelogo.png" class="link-icon" alt="Icono 3">
-        YouTube
-    </a>
-</div>
-
-        <div class="video-section">
-            <h2 class="video-title">Mods Latinos Adelanto</h2>
-            <div class="video-container">
-                <div class="youtube-embed">
-                    <iframe 
-                        id="youtube-video"
-                        src="https://www.youtube.com/embed/2BFxSUjj2bw?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&enablejsapi=1&showinfo=0&loop=1&playlist=tq1jzwCwZsE"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                        class="youtube-video"
-                    ></iframe>
-                </div>
-<div class="video-controls">
-    <div class="main-controls">
-        <button id="play-pause-btn" class="video-button" onmousedown="return false">
-            <i class="fas fa-pause"></i> Pausar
-        </button>
-        <button id="unmute-btn" class="video-button" onmousedown="return false">
-            <i class="fas fa-volume-mute"></i> Quitar silencio
-        </button>
+        
+        <p class="footer">Mods creados gracias a <a href="https://twitter.com/Nanakura" class="nanakura-link" target="_blank" rel="noopener noreferrer" draggable="false">@Nanakura</a></p>
     </div>
-    <button id="replay-btn" class="video-button replay-button" onmousedown="return false">
-        <i class="fas fa-redo"></i> Desde el Inicio
-    </button>
-</div>
-            </div>
-        </div>
-
-<div class="footer">
-    <p>Página creada por <a href="https://www.youtube.com/@NanakuraDB" class="creator-link" target="_blank">@Nanakura</a></p>
-</div>
-
-        <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema" onmousedown="return false">
-            <i class="fas fa-moon theme-icon"></i>
-        </button>
-    </div>
-
-    <canvas id="rain-canvas"></canvas>
 
     <script src="script.js"></script>
 </body>
